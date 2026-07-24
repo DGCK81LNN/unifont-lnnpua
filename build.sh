@@ -5,7 +5,7 @@ if [ ! -n "$1" ]; then
 fi
 
 mkdir -p dist &&
-hex2otf hex=LNNPUA.hex out="dist/Unifont LNNPUA.otf" format=cff \
+hex2otf hex=LNNPUA.hex out="dist/UnifontLNNPUA.otf" format=cff \
   0="(C) 2026 DGCK81LNN." \
   1="Unifont LNNPUA" \
   3="UnifontLNNPUA-$1.otf" \
@@ -15,5 +15,5 @@ hex2otf hex=LNNPUA.hex out="dist/Unifont LNNPUA.otf" format=cff \
   11="https://github.com/DGCK81LNN/unifont-lnnpua" \
   13="Licensed under the GNU General Public License, version 3 or later with the GNU font embedding exception." \
   14="https://github.com/DGCK81LNN/unifont-lnnpua#license" &&
-fonttools ttLib.woff2 compress "dist/Unifont LNNPUA.otf"
+fonttools ttLib.woff2 compress "dist/UnifontLNNPUA.otf"
 exit $?

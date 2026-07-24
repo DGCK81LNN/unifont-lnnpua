@@ -1,0 +1,12 @@
+{
+  "name": "@dgck81lnn/unifont-lnnpua",
+  "version": "",
+  "license": "GPL-3.0-or-later",
+  "files": [
+    "dist/*.woff2"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DGCK81LNN/unifont-lnnpua.git"
+  }
+}

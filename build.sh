@@ -5,7 +5,7 @@ if [ ! -n "$1" ]; then
 fi
 
 mkdir -p dist &&
-hex2otf hex=LNNPUA.hex out="dist/UnifontLNNPUA.otf" format=cff \
+hex2otf hex=LNNPUA.hex pos=combining.txt out="dist/UnifontLNNPUA.otf" format=cff \
   0="(C) 2026 DGCK81LNN." \
   1="Unifont LNNPUA" \
   3="UnifontLNNPUA-$1.otf" \

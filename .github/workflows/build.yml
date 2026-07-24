@@ -1,0 +1,59 @@
+name: Build with Unifont Utils
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Determine version
+        id: version
+        run: |
+          if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+            # Extract version from tag, removing 'v' prefix
+            VERSION="${{ github.ref_name }}"
+            VERSION="${VERSION#v}"
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            echo "is_release=1" >> $GITHUB_OUTPUT
+          else
+            # Use truncated commit hash
+            VERSION="${{ github.sha }}"
+            VERSION="${VERSION:0:7}"
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            echo "is_release=0" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install tools
+        uses: tecolicom/actions-use-apt-tools@v1
+        with:
+          tools: unifont-bin fonttools
+          method: timestamp
+
+      - name: Run build script
+        run: |
+          sh build.sh "${{ steps.version.outputs.version }}"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: Unifont-LNNPUA-${{ steps.version.outputs.version }}
+          path: dist/*
+          if-no-files-found: error
+
+      - name: Upload release binaries
+        if: github.event_name == 'push' && steps.version.outputs.is_release == '1'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/*
+          tag_name: ${{ github.ref_name }}
